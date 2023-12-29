@@ -6,7 +6,7 @@
 /*   By: sennakhl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 16:15:18 by sennakhl          #+#    #+#             */
-/*   Updated: 2023/12/27 15:18:31 by sennakhl         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:06:18 by sennakhl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*fill_line(char *line, char *buffer)
 	tmp = (char *)ft_calloc((l + i + 2), sizeof(char));
 	if (!tmp)
 		return ((free(line)), (NULL));
-	ft_strcpy(tmp, line);
+	tmp = ft_memcpy(tmp, line, l);
 	free(line);
 	j = 0;
 	while (j <= i)
@@ -51,7 +51,7 @@ char	*fill_line(char *line, char *buffer)
 		j++;
 	}
 	l = ft_strlen(buffer + i);
-	ft_strcpy(buffer, buffer + j);
+	buffer = ft_memcpy(buffer, buffer + j, l);
 	ft_bzero(buffer + l, j);
 	return (tmp);
 }
@@ -74,6 +74,8 @@ char	*get_next_line(int fd)
 	while (new_line(line))
 	{
 		q = read(fd, arr[fd], BUFFER_SIZE);
+		if (q == 0 && line[0])
+			break ;
 		if (q <= 0)
 			return ((free(line)), (NULL));
 		line = fill_line(line, arr[fd]);
@@ -87,12 +89,22 @@ char	*get_next_line(int fd)
 #include <fcntl.h>
 int main()
 {
-	int fd1 = open("test1.txt",O_RDONLY);
+	int fd1 = open("test.txt",O_RDONLY);
 	int fd2 = open("test2.txt",O_RDONLY);
 	int fd3 = open("test3.txt",O_RDONLY);
 	char *line;
 	
 
+	printf("%s",line = get_next_line(fd1));
+	free(line);
+	printf("%s",line = get_next_line(fd1));
+	free(line);
+	printf("%s",line = get_next_line(fd1));
+	free(line);
+	printf("%s",line = get_next_line(fd1));
+	free(line);
+	printf("%s",line = get_next_line(fd1));
+	free(line);
 	printf("%s",line = get_next_line(fd1));
 	free(line);
 	printf("%s",line = get_next_line(fd2));
@@ -138,5 +150,4 @@ int main()
 	close(fd3);
 
 	return (0);
-}
-*/
+}*/

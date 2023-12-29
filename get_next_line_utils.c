@@ -53,17 +53,15 @@ size_t	ft_strlen(char	*str)
 	return (i);
 }
 
-void	ft_strcpy(char *dest, char *src)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
 
-	if (src == NULL)
-		return ;
 	i = 0;
-	while (src[i])
+	while (i < n && (dst != NULL || src != NULL))
 	{
-		dest[i] = src[i];
+		((char *)dst)[i] = ((char *)src)[i];
 		i++;
 	}
-	dest[i] = 0;
+	return (dst);
 }
